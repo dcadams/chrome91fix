@@ -42,23 +42,29 @@ printf "Done with auto_auth.py\n\n"
 printf "Processing common.py\n"
 src=/edx/app/edxapp/edx-platform/lms/envs/common.py
 dest=/edx/app/edxapp/edx-platform/lms/envs/common.py_${today}
-cp $src $dest
 
-if (( $(grep -c "SESSION_SERIALIZER" $src) )); then
-	sed -i "/SESSION_SERIALIZER/a DCS_SESSION_COOKIE_SAMESITE_FORCE_ALL = True" $src
-	sed -i "/SESSION_SERIALIZER/a DCS_SESSION_COOKIE_SAMESITE = 'None'" $src
-fi
+if (( ! $(grep -c "DCS_SESSION_COOKIE_SAMESITE" $src) )); then
+    cp $src $dest
+
+    if (( $(grep -c "SESSION_SERIALIZER" $src) )); then
+	    sed -i "/SESSION_SERIALIZER/a DCS_SESSION_COOKIE_SAMESITE_FORCE_ALL = True" $src
+	    sed -i "/SESSION_SERIALIZER/a DCS_SESSION_COOKIE_SAMESITE = 'None'" $src
+    fi
 
 rm /edx/app/edxapp/edx-platform/lms/envs/common.pyc
+fi
 printf "Done with common.py\n\n"
 
 printf "Processing lms.env.json\n"
 src=/edx/app/edxapp/lms.env.json
 dest=/edx/app/edxapp/lms.env.json_${today}
-cp $src $dest
 
-if (( $(grep -c "DATA_DIR" $src) )); then
-	sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE_FORCE_ALL": true,' $src
-	sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE": "None",' $src
+if (( ! $(grep -c "DCS_SESSION_COOKIE_SAMESITE" $src) )); then
+    cp $src $dest
+
+    if (( $(grep -c "DATA_DIR" $src) )); then
+	    sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE_FORCE_ALL": true,' $src
+	    sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE": "None",' $src
+    fi
 fi
-printf "Done with lms.env.json\n\n"
+printf "Done with lms.env.json\n"
