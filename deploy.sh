@@ -66,5 +66,6 @@ if (( ! $(grep -c "DCS_SESSION_COOKIE_SAMESITE" $src) )); then
 	    sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE_FORCE_ALL": true,' $src
 	    sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE": "None",' $src
     fi
+   chgrp www-data $src
 fi
 printf "Done with lms.env.json\n"
