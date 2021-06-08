@@ -15,31 +15,31 @@ done
 
 today=$(date +'%m_%d_%Y')
 
-echo "Processing signals.py"
+printf "\nProcessing signals.py\n"
 cp /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py_${today}
 cp signals.py /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py
 rm /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.pyc
-echo "Done with signals.py"
+printf "Done with signals.py\n\n"
 
-echo "Processing middleware.py"
+printf "Processing middleware.py\n"
 cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py_${today}
 cp middleware.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py
 rm /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.pyc
-echo "Done with middleware.py"
+printf "Done with middleware.py\n\n"
 
-echo "Processing views.py"
+printf "Processing views.py\n"
 cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py_${today}
 cp views.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py
 rm /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.pyc
-echo "Done with views.py"
+printf "Done with views.py\n\n"
 
-echo "Processing auto_auth.py"
+printf "Processing auto_auth.py\n"
 cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py_${today}
 cp auto_auth.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py
 rm /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.pyc
-echo "Done with auto_auth.py"
+printf "Done with auto_auth.py\n\n"
 
-echo "Processing common.py"
+printf "Processing common.py\n"
 src=/edx/app/edxapp/edx-platform/lms/envs/common.py
 dest=/edx/app/edxapp/edx-platform/lms/envs/common.py_${today}
 cp $src $dest
@@ -50,9 +50,9 @@ if (( $(grep -c "SESSION_SERIALIZER" $src) )); then
 fi
 
 rm /edx/app/edxapp/edx-platform/lms/envs/common.pyc
-echo "Done with common.py"
+printf "Done with common.py\n\n"
 
-echo "Processing lms.env.json"
+printf "Processing lms.env.json\n"
 src=/edx/app/edxapp/lms.env.json
 dest=/edx/app/edxapp/lms.env.json_${today}
 cp $src $dest
@@ -61,4 +61,4 @@ if (( $(grep -c "DATA_DIR" $src) )); then
 	sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE_FORCE_ALL": true,' $src
 	sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE": "None",' $src
 fi
-echo "Done with lms.env.json"
+printf "Done with lms.env.json\n\n"
