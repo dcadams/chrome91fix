@@ -5,7 +5,7 @@
 # https://ibleducation.atlassian.net/browse/CISCOV3-121?focusedCommentId=16652
 
 while true; do
-    read -p "Do you wish to run this program?" yn
+    read -p "Do you wish to run this program? (Y/N)" yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;
@@ -16,25 +16,33 @@ done
 today=$(date +'%m_%d_%Y')
 
 printf "\nProcessing signals.py\n"
-cp /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py_${today}
+if [ ! -f /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py_${today} ]; then
+    cp /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py_${today}
+fi
 cp signals.py /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.py
 rm /edx/app/edxapp/edx-platform/lms/djangoapps/email_marketing/signals.pyc
 printf "Done with signals.py\n\n"
 
 printf "Processing middleware.py\n"
-cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py_${today}
+if [ ! -f /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py_${today} ]; then
+    cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py_${today}
+fi
 cp middleware.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.py
 rm /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/middleware.pyc
 printf "Done with middleware.py\n\n"
 
 printf "Processing views.py\n"
-cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py_${today}
+if [ ! -f /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py_${today} ]; then
+    cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py_${today}
+fi
 cp views.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.py
 rm /edx/app/edxapp/edx-platform/openedx/core/djangoapps/lang_pref/views.pyc
 printf "Done with views.py\n\n"
 
 printf "Processing auto_auth.py\n"
-cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py_${today}
+if [ ! -f /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py_${today} ]; then
+    cp /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py_${today}
+fi
 cp auto_auth.py /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.py
 rm /edx/app/edxapp/edx-platform/openedx/core/djangoapps/user_authn/views/auto_auth.pyc
 printf "Done with auto_auth.py\n\n"
@@ -66,6 +74,5 @@ if (( ! $(grep -c "DCS_SESSION_COOKIE_SAMESITE" $src) )); then
 	    sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE_FORCE_ALL": true,' $src
 	    sed -i '/DATA_DIR/a  \  \  "DCS_SESSION_COOKIE_SAMESITE": "None",' $src
     fi
-   chgrp www-data $src
 fi
 printf "Done with lms.env.json\n"
